@@ -14,14 +14,17 @@ class App extends Component {
     
 
     callAPI() {
-      console.log("api called")
-        fetch("http://localhost:9000/api")            
-            .then(res => res.text())
+      console.log("api called, from /src")
+        axios.get("http://192.168.0.53:9000/api")       
+            //.then(res => console.log(res.data))  
+            //.then(res => res.text())
             .then(res => {
-              let newState = JSON.parse(res);
+              console.log(res.data);
+              let newState = res.data;
+              console.log(newState);
               this.setState({...newState, apiResponse: "Server Connected", serverConnected: true})              
             })
-            .catch(err => err);
+            .catch(err => console.log(err));
     }
     componentDidMount() {
         this.callAPI();
@@ -31,7 +34,7 @@ class App extends Component {
     }   
 
     handleButtonClick(e, valveName) {    
-      axios.get(`http://localhost:9000/${valveName}`)
+      axios.get(`http://192.168.0.53:9000/${valveName}`)
       .then(this.setState({[valveName]: !this.state[valveName]}, () => console.log(this.state[valveName])))
       .then(this.countdownHandler(valveName));
     }
