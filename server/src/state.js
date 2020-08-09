@@ -1,7 +1,7 @@
 class ValveState {
     constructor() {
         this.state = {
-            timer: 5000,
+            timer: 1500000,
             valve1: false, 
             valve2: false  
         }
