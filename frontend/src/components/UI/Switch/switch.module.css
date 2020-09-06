@@ -1,0 +1,60 @@
+/* The switch - the box around the slider */
+.switch {
+  display: flex;
+  justify-content: center;
+  margin: 25px auto;
+  align-items: center;
+  border: 1px solid;
+  width: 100%;
+  max-width: 350px;
+  border-radius: 2px;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.switch p {
+  color: white;
+  font-size: 20px;
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: 0 25px
+}
+
+/* Hide default HTML checkbox */
+.switchInput {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switchLabel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  width: 100px;
+  height: 50px;
+  background:rgba(0, 0, 0, 0.3);
+  border: 1px solid;
+  border-radius: 100px;
+  position: relative;
+  transition: background-color .2s;
+}
+
+.switchLabel .switchSlider {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 45px;
+  height: 45px;
+  border-radius: 45px;
+  transition: 0.2s;
+  background: #fff;
+  box-shadow: 0 0 2px 0 rgba(10, 10, 10, 0.29);
+}
+
+.switchLabel:active .switchSlider {
+  width: 60px;
+}
+.switchLabel:hover .switchSlider {
+  width: 60px;
+}

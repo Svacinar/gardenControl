@@ -1,24 +1,23 @@
-.Button {
-    background-color: transparent;
-    border: none;
-    color: white;
-    outline: none;
+.btn {
+    display: block;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 20px 60px;
+    font-size: 20px;
+    width: 80%;
+    max-width: 350px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0,0,0);
+    color:  #fff;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease-out;    
     cursor: pointer;
-    font: inherit;
-    padding: 10px;
-    margin: 10px;
-    font-weight: bold;
 }
 
-.Button:first-of-type {
-    margin-left: 0;
-    padding-left: 0;
-}
-
-.Success {
-    color: #5C9210;
-}
-
-.Danger {
-    color: #944317;
+.btn:hover {
+    background: rgb(0,1,0, 0.5);
+    transition: all 0.2s ease-in;
 }

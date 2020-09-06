@@ -1,34 +1,38 @@
 const express = require('express');
-const app = express();
 const path = require('path');
+const cors = require('cors');
 
-const ValveState = require('./state.js');
-const setValveTimer = require('./setValveTimer');    
-const setValveState = require('./setValveState');
+const app = express();
+
+const valveManager = require('./valveManager');
 
 app.use(express.static(path.join(__dirname, '../../frontend/build')));
 
-const cors = require('cors');
-
 app.use(cors());
 
-app.get('/', (req, res) => {   
-    res.sendFile(path.join(__dirname, '../../frontend/build/', 'index.html'));
-})
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../frontend/build/', 'index.html'));
+});
 
 app.get('/api', (req, res) => {
-    res.send(ValveState.state);
-})
+  res.send(valveManager.getValveState());
+});
 
-app.get('/valve1', (req, res) => {
-    setValveState('valve1', ValveState);
-    setValveTimer('valve1', ValveState);
-    res.redirect('/');
-})
-app.get('/valve2', (req, res) => {
-    setValveState('valve2', ValveState);
-    setValveTimer('valve2', ValveState);
-    res.redirect('/');
-})
+app.get('/run/:valve', (req, res) => {
+  const valveToRun = req.params.valve;
+  valveManager.handleValveChange(valveToRun);
+  res.redirect('/');
+});
+
+app.get('/cycle', (req, res) => {
+  valveManager.handleValveCycling();
+  res.redirect('/');
+});
+
+app.get('/setTimer/:timerValue', (req, res) => {
+  const timerValue = parseInt(req.params.timerValue);
+  valveManager.setTimerValue(timerValue);
+  res.redirect('/');
+});
 
 module.exports = app;
