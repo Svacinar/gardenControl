@@ -1,3 +1,5 @@
+const switchRpiGpio = require('./switchRpiGpio').switchRpiGpio;
+
 class ValveManager {
   constructor() {
     this.state = {
@@ -63,10 +65,7 @@ class ValveManager {
 
   GPIOhandler(valve) {
     try {
-      if (process.env.DEVELOPMENT === 'true') {
-        this.state.valves[valve].status ? console.log(valve, 0) : console.log(valve, 1);
-      } else {
-        const { switchRpiGpio } = require('./switchRpiGpio');
+      if (process.env.DEVELOPMENT === 'false') {
         this.state.valves[valve].status ? switchRpiGpio(valve, 0) : switchRpiGpio(valve, 1);
       }
     } catch (error) {
