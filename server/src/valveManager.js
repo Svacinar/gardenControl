@@ -1,9 +1,9 @@
-const switchRpiGpio = require('./switchRpiGpio').switchRpiGpio;
+const { switchRpiGpio } = require('./switchRpiGpio');
 
 class ValveManager {
   constructor() {
     this.state = {
-      timer: 5000, //in microseconds
+      timer: 5000, // in microseconds
       valves: {
         valve1: {
           name: 'Valve 1',
@@ -61,6 +61,11 @@ class ValveManager {
       const handleValveChange = this.handleValveChange.bind(this);
       setTimeout(handleValveChange, i * (this.state.timer + 5000), valves[i]);
     }
+  }
+
+  handleCronSchedule(timer) {
+    this.setTimerValue(timer);
+    this.handleValveCycling();
   }
 
   GPIOhandler(valve) {
