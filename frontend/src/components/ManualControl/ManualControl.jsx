@@ -56,8 +56,7 @@ class ManualControl extends Component {
   }
 
   render() {
-    const valves2 = this.state.valves;
-    const valves = Object.keys(valves2);
+    const valves = Object.keys(this.state.valves);
     const valvesSwitches = valves.map((valve, id) =>
       <Switch key={id} name={"Valve " + (id + 1)} status={this.state.valves[valve].status} clicked={e => this.handleButtonClick(e, valve)} />
     )
