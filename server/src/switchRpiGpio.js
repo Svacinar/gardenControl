@@ -1,5 +1,13 @@
+const fs = require('fs');
+
 function switchRpiGpio(valve, boolean) {
   try {
+    const date = new Date().toISOString();
+    const logMessage = `${date}, ${valve}, ${boolean}\n`;
+    const stream = fs.createWriteStream('log.txt', { flags: 'a' });
+    stream.write(logMessage, 'UTF8');
+    stream.end();
+
     const { Gpio } = require('onoff');
     const LED = [];
     LED[0] = new Gpio(2, 'out');
