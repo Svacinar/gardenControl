@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import classes from './field.module.css';
 import axios from 'axios';
 
-const field = (props) => {
+const Field = (props) => {
     let timerValue = (props.timer / 60000);
 
     const [timer, setTimer] = useState("");
@@ -24,4 +24,4 @@ const field = (props) => {
     );
 };
 
-export default field;
+export default Field;
