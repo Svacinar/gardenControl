@@ -31,7 +31,7 @@ class CronManager {
       strategyID,
       cron: new CronJob(
         waterringSchedule,
-        handleCronShedule,
+        handleCronShedule(timer),
         null,
         true,
       ),
