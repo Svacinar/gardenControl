@@ -1,17 +1,32 @@
 const express = require('express');
-const path = require('path');
 const cors = require('cors');
+const path = require('path');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+const scheduleRouter = require('./Routes/scheduleRouter');
 
 const app = express();
+app.use(cors());
+
+mongoose.connect(
+  process.env.DB_CONNECT,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => console.log("DB Connected..."))
+  .catch(e => {
+    console.log(e)
+  });
+
+
 
 const valveManager = require('./valveManager');
 const cronManager = require('./cronManager');
 const { handleCron } = require('./cronManager');
 
 app.use(express.static(path.join(__dirname, '../../frontend/build')));
-
-app.use(cors());
 
 app.use(bodyParser.json());
 
@@ -51,5 +66,7 @@ app.post('/setcron', (req, res) => {
 app.get('/cronAPI', (req, res) => {
   res.send(cronManager.cronAPI());
 });
+
+app.use('/schedule', scheduleRouter);
 
 module.exports = app;

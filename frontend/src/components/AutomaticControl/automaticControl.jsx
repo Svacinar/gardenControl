@@ -3,6 +3,9 @@ import Button from '../UI/Button/button';
 
 import axios from 'axios';
 import StrategyCard from "../UI/StrategyCard/strategyCard";
+import Scheduler from "../UI/ScheduleCalendar/scheduler";
+
+import AutomaticControlHandler from '../AutomaticControl/automaticControlHandler'
 
 class AutomaticControl extends Component {
 

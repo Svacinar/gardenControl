@@ -1,10 +1,14 @@
-const { CronJob } = require('cron');
+const { CronJob, job } = require('cron');
+
+const schedule = require('node-schedule');
+
 const strategyManager = require('./WateringStrategy/strategyManager');
 const valveManager = require('./valveManager');
 
 class CronManager {
   constructor() {
     this.activeStrategies = {};
+    this.activeSchedules = {};
   }
 
   cronAPI() {
@@ -16,6 +20,34 @@ class CronManager {
       response[key] = { ...other };
     }
     return response;
+  }
+
+  TESTadd(id, name, duration, date, description) {
+    console.log("in TESTadd");
+    console.log(...arguments);
+    const handleCronShedule = function (duration) {
+      console.log("handle cron function outer scope");
+      return function () {
+        console.log("handle cron schedule inner scope")
+        valveManager.handleCronSchedule(duration);
+      };
+    };
+    this.activeSchedules[id] = {
+      name,
+      duration,
+      date,
+      description,
+      cron: schedule.scheduleJob(
+        date,
+        handleCronShedule(duration)
+      )
+    };
+
+  }
+
+  scheduleStop(id) {
+    this.activeSchedules[id].cron.cancel();
+    delete this.activeSchedules[id];
   }
 
   add(strategy, timer, waterringSchedule, strategyID) {
