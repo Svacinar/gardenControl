@@ -32,30 +32,25 @@ class CronManager {
       cron: new CronJob(
         waterringSchedule,
         handleCronShedule(timer),
-        null,
         true,
       ),
-
     };
   }
 
   stop(strategyID) {
-    try {
-      if (!this.activeStrategies.hasOwnProperty(strategyID)) {
-        this.activeStrategies = {};
-      }
-      delete this.activeStrategies[strategyID];
-    } catch (error) {
+    if (!this.activeStrategies.hasOwnProperty(strategyID)) {
+      Object.keys(this.activeStrategies).forEach(strategy => {
+        this.activeStrategies[strategy].cron.stop();
+      });
       this.activeStrategies = {};
+      return
     }
+    this.activeStrategies[strategyID].cron.stop();
+    delete this.activeStrategies[strategyID];
   }
 
   list() {
     return this.activeStrategies;
-  }
-
-  running(strategyID) {
-    return this.activeStrategies[strategyID].cron.running;
   }
 
   lastDate(strategyID) {
