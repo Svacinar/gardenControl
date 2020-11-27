@@ -39,7 +39,7 @@ class CronManager {
       description,
       cron: schedule.scheduleJob(
         date,
-        handleCronShedule(duration)
+        handleCronShedule(duration * 60000)
       )
     };
 
