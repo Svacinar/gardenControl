@@ -1,8 +1,10 @@
 const { switchRpiGpio } = require('./switchRpiGpio');
+const { weatherHandler } = require('./weatherHandler');
 
 class ValveManager {
   constructor() {
     this.state = {
+      rainProtect: true,
       timer: 5000, // in microseconds
       valves: {
         valve1: {
@@ -64,8 +66,19 @@ class ValveManager {
   }
 
   handleCronSchedule(timer) {
-    this.setTimerValue(timer);
-    this.handleValveCycling();
+    try {
+      if (this.state.rainProtect && weatherHandler.rainProtectHandler() === true) {
+        console.log("protected");
+        return
+      }
+      console.log("not protected")
+      this.setTimerValue(timer);
+      this.handleValveCycling();
+
+    } catch (error) {
+      console.log(error)
+    }
+
   }
 
   GPIOhandler(valve) {
