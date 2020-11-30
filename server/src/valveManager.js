@@ -46,6 +46,10 @@ class ValveManager {
     this.GPIOhandler(valve, lowOrHigh);
   }
 
+  setRainProtect() {
+    this.state.rainProtect = !this.state.rainProtect
+  }
+
   setValveTimer(valve) {
     const setValveState = this.setValveState.bind(this);
     const { timer } = this.state;
