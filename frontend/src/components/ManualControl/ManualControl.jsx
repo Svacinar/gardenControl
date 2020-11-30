@@ -24,7 +24,7 @@ class ManualControl extends Component {
 
 
   callAPI() {
-    axios.get(`${process.env.REACT_APP_API}/api`)
+    axios.get(`${process.env.REACT_APP_API}/valve/api`)
       .then(res => {
         let newState = res.data;
         this.setState({ ...newState, apiResponse: "Server Connected", serverConnected: true })
@@ -44,11 +44,11 @@ class ManualControl extends Component {
 
   handleButtonClick(e, valveName) {
     if (this.state.cycling && this.state.valves[valveName].status === false) {
-      axios.get(`${process.env.REACT_APP_API}/cycle`)
+      axios.get(`${process.env.REACT_APP_API}/valve/cycle`)
         .then(this.callAPI())
       return
     }
-    axios.get(`${process.env.REACT_APP_API}/run/${valveName}`)
+    axios.get(`${process.env.REACT_APP_API}/valve/run/${valveName}`)
       .then(this.callAPI())
   }
   handleCycleClick(e) {
