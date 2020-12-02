@@ -36,4 +36,8 @@ app.use('/cron', cronRouter);
 
 app.use('/schedule', scheduleRouter);
 
+app.get('*', (req, res) => {
+  res.redirect(404, '/');
+});
+
 module.exports = app;
