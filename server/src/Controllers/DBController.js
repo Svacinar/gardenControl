@@ -15,7 +15,7 @@ exports.postSchedule = async (req, res) => {
     });
     try {
         await newSchedule.save();
-        cronManager.TESTadd(
+        cronManager.addSchedule(
             id,
             name,
             duration,

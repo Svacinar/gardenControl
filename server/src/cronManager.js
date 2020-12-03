@@ -22,7 +22,7 @@ class CronManager {
     return response;
   }
 
-  TESTadd(id, name, duration, date, description) {
+  addSchedule(id, name, duration, date, description) {
     console.log("in TESTadd");
     console.log(...arguments);
     const handleCronShedule = function (duration) {
