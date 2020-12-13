@@ -8,8 +8,29 @@ const scheduleRouter = require('./Routes/scheduleRouter');
 const cronRouter = require('./Routes/cronRouter');
 const valveRouter = require('./Routes/valveRouter')
 
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      title: "Garden App ",
+      description: "NodeJS server for controlling home irrigiation automation",
+      contact: {
+        name: "Pan Mozek"
+      }
+    },
+    servers: ["hhtp://localhost:9000"]
+  },
+  apis: ['./src/Routes/cronRouter.js']
+}
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+
+
 const app = express();
 app.use(cors());
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 mongoose.connect(
   process.env.DB_CONNECT,
