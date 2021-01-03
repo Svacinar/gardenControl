@@ -3,7 +3,10 @@ const cors = require('cors');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
 
+const verifyToken = require('./verifyToken').verify;
+const authenticate = require('./Routes/authenticate');
 const scheduleRouter = require('./Routes/scheduleRouter');
 const cronRouter = require('./Routes/cronRouter');
 const valveRouter = require('./Routes/valveRouter')
@@ -30,6 +33,7 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 const app = express();
 app.use(cors());
+app.use(cookieParser())
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 mongoose.connect(
@@ -47,15 +51,21 @@ app.use(express.static(path.join(__dirname, '../../frontend/build')));
 
 app.use(bodyParser.json());
 
+app.use('/valve', verifyToken);
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../../frontend/build/', 'index.html'));
 });
+
+
 
 app.use('/valve', valveRouter);
 
 app.use('/cron', cronRouter);
 
 app.use('/schedule', scheduleRouter);
+
+app.use('/', authenticate);
 
 app.get('*', (req, res) => {
   res.redirect(404, '/');
