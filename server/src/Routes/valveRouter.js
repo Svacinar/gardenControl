@@ -3,9 +3,10 @@ const router = express.Router();
 
 const valveController = require('../Controllers/valveController');
 
-router.get('/api', valveController.getValveAPI);
+router.get('/', valveController.getValveAPI);
 router.get('/run/:valve', valveController.runValve)
 router.get('/cycle', valveController.cycleValves)
-router.get('/setTimer/:timerValue', valveController.setTimer)
+router.get('/timer/:timerValue', valveController.setTimer)
+router.get('/rainProtect', valveController.rainProtect)
 
 module.exports = router;

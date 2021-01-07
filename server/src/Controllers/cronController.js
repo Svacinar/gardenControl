@@ -1,5 +1,5 @@
-const cronManager = require('../cronManager');
-const valveManager = require('../valveManager')
+const cronManager = require('../Services/cronManager');
+const valveManager = require('../Services/valveManager')
 
 exports.getCronAPI = (req, res) => {
     res.status(200).send(cronManager.cronAPI());
@@ -11,14 +11,4 @@ exports.setcron = (req, res) => {
     const { strategyID } = req.body;
     cronManager.handleCron(state, strategy, strategyID);
     res.redirect(200, '/');
-}
-
-exports.rainProtect = (req, res) => {
-    try {
-        valveManager.setRainProtect();
-        res.redirect(200, '/');
-    } catch (error) {
-        res.redirect(400, '/');
-    }
-
 }

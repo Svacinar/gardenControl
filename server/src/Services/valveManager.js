@@ -5,7 +5,7 @@ class ValveManager {
   constructor() {
     this.state = {
       rainProtect: true,
-      timer: 5000, // in microseconds
+      timer: 600000, // in microseconds
       valves: {
         valve1: {
           name: 'Valve 1',

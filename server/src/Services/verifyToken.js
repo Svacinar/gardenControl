@@ -12,6 +12,7 @@ exports.verify = function (req, res, next) {
         payload = jwt.verify(accessToken, process.env.TOKEN_SECRET)
         next();
     } catch (error) {
+        console.log(error)
         return res.status(401).send("something went wrong")
     }
 }

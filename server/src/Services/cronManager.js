@@ -2,7 +2,7 @@ const { CronJob, job } = require('cron');
 
 const schedule = require('node-schedule');
 
-const strategyManager = require('./WateringStrategy/strategyManager');
+const strategyManager = require('../WateringStrategy/strategyManager');
 const valveManager = require('./valveManager');
 
 class CronManager {

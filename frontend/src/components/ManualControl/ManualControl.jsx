@@ -12,7 +12,7 @@ class ManualControl extends Component {
 
   state = {
     serverConnected: false,
-    apiResponse: "Error has occured, please refresh...",
+    apiResponse: "API offline, please login",
     valves: {
       valve: {
         name: 'N/A',
@@ -24,7 +24,7 @@ class ManualControl extends Component {
 
 
   callAPI() {
-    axios.get(`${process.env.REACT_APP_API}/valve/api`)
+    axios.get(`${process.env.REACT_APP_API}/valve/`)
       .then(res => {
         let newState = res.data;
         this.setState({ ...newState, apiResponse: "Server Connected", serverConnected: true })

@@ -5,11 +5,9 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 
-const verifyToken = require('./verifyToken').verify;
-const authenticate = require('./Routes/authenticate');
-const scheduleRouter = require('./Routes/scheduleRouter');
-const cronRouter = require('./Routes/cronRouter');
-const valveRouter = require('./Routes/valveRouter')
+const verifyToken = require('./Services/verifyToken').verify;
+const authenticateRouter = require('./Routes/authenticateRouter');
+const apiRouter = require('./Routes/apiRouter');
 
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
@@ -30,11 +28,12 @@ const swaggerOptions = {
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
-
 const app = express();
+
 app.use(cors());
 app.use(cookieParser())
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use(bodyParser.json());
 
 mongoose.connect(
   process.env.DB_CONNECT,
@@ -49,23 +48,13 @@ mongoose.connect(
 
 app.use(express.static(path.join(__dirname, '../../frontend/build')));
 
-app.use(bodyParser.json());
-
-app.use('/valve', verifyToken);
+app.use('/', authenticateRouter);
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../../frontend/build/', 'index.html'));
 });
 
-
-
-app.use('/valve', valveRouter);
-
-app.use('/cron', cronRouter);
-
-app.use('/schedule', scheduleRouter);
-
-app.use('/', authenticate);
+app.use('/api', verifyToken, apiRouter);
 
 app.get('*', (req, res) => {
   res.redirect(404, '/');
