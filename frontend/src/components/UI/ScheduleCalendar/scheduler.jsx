@@ -12,7 +12,7 @@ const localizer = momentLocalizer(moment);
 
 const submitHandler = async (e, name, duration, date, description) => {
     e.preventDefault();
-    let res = await axios.post(`${process.env.REACT_APP_API}/schedule/`, {
+    let res = await axios.post(`api/schedule/`, {
         name: name,
         duration: duration,
         scheduledDate: date,
@@ -22,7 +22,7 @@ const submitHandler = async (e, name, duration, date, description) => {
 }
 
 const fetchData = (setEvents) => {
-    axios.get(`${process.env.REACT_APP_API}/schedule/`)
+    axios.get(`api/schedule/`)
         .then(res => {
             let data = res.data.data
             let newEvents = []
@@ -62,7 +62,7 @@ const Scheduler = (props) => {
 
     const doubleClickHandler = (e) => {
         let eventToDeleteId = e.id;
-        axios.delete(`${process.env.REACT_APP_API}/schedule/${eventToDeleteId}`)
+        axios.delete(`api/schedule/${eventToDeleteId}`)
             .then(res => {
                 console.log(res);
             })

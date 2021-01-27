@@ -9,7 +9,7 @@ const Field = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.get(`${process.env.REACT_APP_API}/valve/Timer/${timer}`);
+        axios.get(`api/valve/Timer/${timer}`);
     }
 
     return (

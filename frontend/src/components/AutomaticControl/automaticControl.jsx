@@ -23,8 +23,9 @@ class AutomaticControl extends Component {
 
 
     callAPI() {
-        axios.get(`${process.env.REACT_APP_API}/cron/`)
+        axios.get(`/api/cron/`)
             .then(res => {
+                console.log(window.location.hostname)
                 let newState = res.data;
                 this.setState({ apiResponse: "Server Connected", serverConnected: true, strategies: newState })
 
@@ -44,7 +45,7 @@ class AutomaticControl extends Component {
 
     handleStartButtonClick(e, strategy) {
         e.preventDefault();
-        axios.post(`${process.env.REACT_APP_API}/cron/`, {
+        axios.post(`/api/cron/`, {
             state: true,
             strategy: strategy,
             strategyID: Math.floor(Math.random() * 100)
@@ -57,7 +58,7 @@ class AutomaticControl extends Component {
     handleStopButtonClick(e, strategyID) {
         //unfinished click ID - will delete all active strategies
         e.preventDefault();
-        axios.post(`${process.env.REACT_APP_API}/cron/`, {
+        axios.post(`/api/cron/`, {
             state: false,
             strategy: "N/A",
             strategyID: strategyID

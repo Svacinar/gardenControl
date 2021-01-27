@@ -1,18 +1,30 @@
-import React, { useState, useEffect, } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import './login.css'
 
+import auth from '../Authentication/Auth'
+
 const login = (props) => {
+    const { setAuthenticated } = useContext(auth);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let res = await axios.post(`${process.env.REACT_APP_BASE_URL}/authenticate`, {
-            email: email,
-            password: password
-        })
-        props.history.push('/');
+        try {
+            let res = await axios.post(`/authenticate`, {
+                email: email,
+                password: password
+            })
+            setAuthenticated(true);
+            props.history.push('/');
+        } catch (error) {
+            setAuthenticated(false);
+            alert("Please provide valid credentials")
+        }
+
+
+
     }
 
     return (
