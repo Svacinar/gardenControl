@@ -6,6 +6,7 @@ import VideoFeature from './components/videoFeature';
 import Weather from './components/Weather/weather';
 import Login from './components/LoginComponent/login'
 import LawnDashboard from './components/LawnDashboard/LawnDashboard';
+import HeatingDashboard from './components/HeatingDashboard/HeatingDashboard';
 import LandingPage from './components/LandingPage/LandingPage';
 import Page404 from './components/UI/Page404/Page404.jsx';
 
@@ -44,7 +45,7 @@ const App = () => {
           <Route path="/logout" exact render={() => <div>logout component</div>} />
           <Route path="/weather" exact component={Weather} />
           <PrivateRoute path="/lights" exact render={() => <div>There will be Lights Control Panel</div>} />
-          <PrivateRoute path="/heating" exact render={() => <div>There will be Heating Control Panel</div>} />
+          <PrivateRoute path="/heating" exact component={HeatingDashboard} />
           <PrivateRoute path="/smart" exact render={() => <div>There will be Smart Devices Control Panel</div>} />
           <Route component={Page404} />
         </Switch>
