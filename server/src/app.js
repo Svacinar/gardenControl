@@ -4,6 +4,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const timeout = require('connect-timeout');
 
 const verifyToken = require('./Services/verifyToken').verify;
 const authenticateRouter = require('./Routes/authenticateRouter');
@@ -59,5 +60,10 @@ app.use('/api', verifyToken, apiRouter);
 app.get('*', (req, res) => {
   res.redirect(404, '/');
 });
+app.use(haltOnTimedout);
+
+function haltOnTimedout(req, res, next) {
+  if (!req.timedout) next()
+}
 
 module.exports = app;

@@ -1,4 +1,5 @@
-const { switchRpiGpio } = require('./switchRpiGpio');
+const axios = require('axios');
+const { gpioService } = require('./gpioService');
 const { weatherHandler } = require('./weatherHandler');
 
 class ValveManager {
@@ -20,7 +21,23 @@ class ValveManager {
   }
 
   getValveState() {
+    if (process.env.ENVIRONMENT === 'arduino') {
+      this.getRemoteValveState();
+    }
     return this.state;
+  }
+
+  async getRemoteValveState() {
+    try {
+      const valveState = await axios.get(process.env.ARDUINO_IP);
+      console.log(valveState);
+      Object.keys(valveState).map(valve => {
+        this.state.valves[valve].status = valveState[valve];
+      })
+    }
+    catch (error) {
+      console.log(error.message);
+    }
   }
 
   getValveTimer() {
@@ -36,14 +53,15 @@ class ValveManager {
     this.state.timer = value;
   }
 
-  setValveState(valve, status) {
-    if (status === undefined) {
-      this.state.valves[valve].status = !this.state.valves[valve].status;
-    } else {
-      this.state.valves[valve].status = false;
+  async setValveState(valve) {
+    try {
+      const newValveState = !this.state.valves[valve].status;
+      await this.GPIOhandler(valve, newValveState);
+      this.state.valves[valve].status = newValveState;
+    } catch (error) {
+      console.log(error.message);
     }
-    const lowOrHigh = this.state.valves[valve].status;
-    this.GPIOhandler(valve, lowOrHigh);
+
   }
 
   setRainProtect() {
@@ -51,25 +69,26 @@ class ValveManager {
   }
 
   setValveTimer(valve) {
-    const setValveState = this.setValveState.bind(this);
+    const setValveState = this.setValveState.bind(this); //cely tenhle kod zmizi
     const { timer } = this.state;
     setTimeout(setValveState, timer, valve, false);
   }
 
-  handleValveChange(valve) {
-    this.setValveTimer(valve);
+  async handleValveChange(valve) {
+    //this.setValveTimer(valve);
+    //this.setValveState(valve);
     this.setValveState(valve);
   }
 
   handleValveCycling() {
     const valves = this.getAllValves();
     for (let i = 0; i <= valves.length - 1; i++) {
-      const handleValveChange = this.handleValveChange.bind(this);
+      const handleValveChange = this.handleValveChange.bind(this); //tohle by teoreticky mohlo fungovat (akorat tam nebude ten valveTimer, ale to nevadi, princip zustane)
       setTimeout(handleValveChange, i * (this.state.timer + 5000), valves[i]);
     }
   }
 
-  handleCronSchedule(timer) {
+  handleCronSchedule(timer) { //tahle funkce bude bezeme zmeny - lisi se implementace handleValveChange
     try {
       if (this.state.rainProtect && weatherHandler.rainProtectHandler() === true) {
         console.log("protected");
@@ -85,14 +104,14 @@ class ValveManager {
 
   }
 
-  GPIOhandler(valve) {
-    try {
-      if (process.env.DEVELOPMENT === 'false') {
-        this.state.valves[valve].status ? switchRpiGpio(valve, 0) : switchRpiGpio(valve, 1);
-      }
-    } catch (error) {
-      return error;
+  async GPIOhandler(valve, state) {
+    if (process.env.DEVELOPMENT === 'true') {
+      console.log(valve);
+      console.log(state);
+      return;
     }
+    const timer = this.getValveTimer();
+    await gpioService(valve, state, timer);
   }
 }
 
