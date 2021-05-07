@@ -1,0 +1,58 @@
+.login > div {
+  background: rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(0,0,0);
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 10px;  
+  grid-column: span 3;
+}
+.login {
+  margin: 30px;
+  display: grid;
+  grid-gap: 15px;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+}
+.loginForm > div{
+    margin: 20px
+  
+}
+
+.loginForm div input {
+  display: block;
+  margin: 10px auto;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.1);
+  width: 50%;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 1px solid rgb(0, 0, 0);
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+  text-align: center;
+}
+.loginForm div input:focus {
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 3px solid #555;
+  }
+.button {
+    display: block;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 20px 60px;
+    font-size: 20px;
+    width: 80%;
+    max-width: 350px;
+    background: rgba(0, 0, 0, 0.3);    
+    color:  #fff;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease-out;    
+    cursor: pointer;
+}
