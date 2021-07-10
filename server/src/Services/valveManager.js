@@ -37,7 +37,7 @@ class ValveManager {
       const valveState = valveServerResponse.data;
       logger.info(valveState);
       Object.keys(valveState).forEach((valve) => {
-        this.state.valves[valve].status = valveState[valve];
+        this.state.valves[valve].status = !valveState[valve];
       });
     }
     catch (error) {
