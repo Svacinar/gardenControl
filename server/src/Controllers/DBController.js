@@ -1,4 +1,4 @@
-const cronManager = require('../cronManager');
+const cronManager = require('../Services/cronManager');
 const wateringScheduleSchema = require('../Models/wateringScheduleSchema');
 
 exports.postSchedule = async (req, res) => {

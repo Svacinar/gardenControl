@@ -1,11 +1,12 @@
 const express = require('express');
+
 const router = express.Router();
 
 const DBController = require('../Controllers/DBController');
 
-router.post('/post', DBController.postSchedule);
-router.get('/find', DBController.findNearestSchedule);
-router.get('/getAll', DBController.getAllSchedules);
-router.delete('/delete/:id', DBController.delete);
+router.get('/', DBController.findNearestSchedule);
+router.get('/all', DBController.getAllSchedules);
+router.post('/', DBController.postSchedule);
+router.delete('/:id', DBController.delete);
 
 module.exports = router;

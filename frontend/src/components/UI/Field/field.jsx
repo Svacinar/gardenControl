@@ -9,16 +9,20 @@ const Field = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.get(`${process.env.REACT_APP_API}/valve/setTimer/${timer}`);
+        axios.get(`api/valve/Timer/${timer}`);
     }
 
     return (
         <div className={classes.wrapper}>
             <form onSubmit={handleSubmit}>
-                <label className={classes.label} type="label" htmlFor="timerValue">Timer set to {timerValue} minutes
-                <input type="text" id="timerValue" name="timerValue" className={classes.inputField} onChange={e => setTimer(e.target.value * 60000)} required />
-                </label>
-                <input type="submit" value="Set" className={classes.submitButton} />
+                <label className={classes.label} type="label" htmlFor="timerValue" className={classes.label}>Timer:{timerValue} min</label>
+                <div className="test">
+                    <input type="text" placeholder="Set timer" id="timerValue" name="timerValue" className={classes.inputField} onChange={e => setTimer(e.target.value * 60000)} required />
+
+                    <input type="submit" value="Set" className={classes.submitButton} />
+                </div>
+
+
             </form>
         </div>
     );

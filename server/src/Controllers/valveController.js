@@ -1,4 +1,4 @@
-const valveManager = require('../valveManager');
+const valveManager = require('../Services/valveManager');
 
 exports.getValveAPI = (req, res) => {
     res.status(200).send(valveManager.getValveState());
@@ -22,6 +22,15 @@ exports.setTimer = (req, res) => {
         valveManager.setTimerValue(timerValue);
         res.redirect(200, '/');
 
+    } catch (error) {
+        res.redirect(400, '/');
+    }
+
+}
+exports.rainProtect = (req, res) => {
+    try {
+        valveManager.setRainProtect();
+        res.redirect(200, '/');
     } catch (error) {
         res.redirect(400, '/');
     }

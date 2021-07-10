@@ -4,13 +4,15 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
+import './scheduler.css'
+
 moment.locale("en");
 const localizer = momentLocalizer(moment);
 
 
 const submitHandler = async (e, name, duration, date, description) => {
     e.preventDefault();
-    let res = await axios.post(`${process.env.REACT_APP_API}/schedule/post`, {
+    let res = await axios.post(`api/schedule/`, {
         name: name,
         duration: duration,
         scheduledDate: date,
@@ -20,7 +22,7 @@ const submitHandler = async (e, name, duration, date, description) => {
 }
 
 const fetchData = (setEvents) => {
-    axios.get(`${process.env.REACT_APP_API}/schedule/getAll`)
+    axios.get(`api/schedule/`)
         .then(res => {
             let data = res.data.data
             let newEvents = []
@@ -60,7 +62,7 @@ const Scheduler = (props) => {
 
     const doubleClickHandler = (e) => {
         let eventToDeleteId = e.id;
-        axios.delete(`${process.env.REACT_APP_API}/schedule/delete/${eventToDeleteId}`)
+        axios.delete(`api/schedule/${eventToDeleteId}`)
             .then(res => {
                 console.log(res);
             })
@@ -69,28 +71,32 @@ const Scheduler = (props) => {
 
     return (
         <div >
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Name</label>
-                    <input type="text" name="name" required onChange={e => setName(e.target.value)} />
+            <form onSubmit={handleSubmit} className="inputForm">
+                <h2 className="">Irrigation Planning Calendar</h2>
+                <div className="fieldGrid">
+                    <div className="field">
+                        <label>Name</label>
+                        <input type="text" name="name" required onChange={e => setName(e.target.value)} />
+                    </div>
+                    <div className="field">
+                        <label>Duration</label>
+                        <input type="number" name="duration" required onChange={e => setDuration(e.target.value)} />
+                    </div>
+                    <div className="field">
+                        <label>Date</label>
+                        <input type="datetime-local" name="scheduled_date" required onChange={e => setDate(e.target.value)} />
+                    </div>
+                    <div className="field">
+                        <label>Description</label>
+                        <input type="String" name="description" onChange={e => setDescription(e.target.value)} />
+                    </div>
                 </div>
+
                 <div>
-                    <label>Duration</label>
-                    <input type="number" name="duration" required onChange={e => setDuration(e.target.value)} />
-                </div>
-                <div>
-                    <label>Scheduled Date</label>
-                    <input type="datetime-local" name="scheduled_date" required onChange={e => setDate(e.target.value)} />
-                </div>
-                <div>
-                    <label>Description</label>
-                    <input type="String" name="description" onChange={e => setDescription(e.target.value)} />
-                </div>
-                <div>
-                    <button type="submit">Schedule</button>
+                    <button type="submit" className="scheduleButton">Schedule</button>
                 </div>
             </form>
-            <div style={{ height: '400pt' }}>
+            <div style={{ height: '350pt' }}>
                 <Calendar
                     events={events}
                     startAccessor="start"
