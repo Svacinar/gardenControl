@@ -44,7 +44,7 @@ const createTemperatureButton = (sensors) => {
     )
 }
 
-const heatingDashboard = () => {
+const HeatingDashboard = () => {
 
     const [sensors, setSensors] = useState([]);
 
@@ -64,4 +64,4 @@ const heatingDashboard = () => {
     )
 }
 
-export default heatingDashboard
+export default HeatingDashboard

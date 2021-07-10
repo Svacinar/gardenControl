@@ -13,7 +13,7 @@ import axios from 'axios';
 
 
 
-const navbar = (props) => {
+const Navbar = (props) => {
   const { authenticated, setAuthenticated } = useContext(auth);
 
   const handleLogout = async () => {
@@ -48,4 +48,4 @@ const navbar = (props) => {
   )
 }
 
-export default navbar
+export default Navbar

@@ -4,7 +4,7 @@ import './login.css'
 
 import auth from '../Authentication/Auth'
 
-const login = (props) => {
+const Login = (props) => {
     const { setAuthenticated } = useContext(auth);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -53,4 +53,4 @@ const login = (props) => {
     )
 }
 
-export default login
+export default Login
