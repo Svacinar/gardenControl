@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Scheduler from "../UI/ScheduleCalendar/scheduler";
 import AutomaticControl from "./automaticControl";
 
-const automaticControlHandler = (props) => {
+const AutomaticControlHandler = (props) => {
 
     const [componentSwitch, setSwitch] = useState("null");
 
@@ -28,4 +28,4 @@ const automaticControlHandler = (props) => {
     );
 };
 
-export default automaticControlHandler;
+export default AutomaticControlHandler;
