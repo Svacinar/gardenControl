@@ -50,7 +50,7 @@ const App = () => {
           <Route component={Page404} />
         </Switch>
 
-        <footer className="footer">Created 2020, Patrik Mackerle, version 1</footer>
+        <footer className="footer">Created 2020, Patrik Mackerle, version 3</footer>
       </div>
 
     </auth.Provider>
