@@ -12,7 +12,7 @@ class ManualControl extends Component {
 
   state = {
     serverConnected: false,
-    apiResponse: "API offline, please login",
+    remoteApiStatus: 'API offline',
     valves: {
       valve: {
         name: 'N/A',
@@ -27,10 +27,12 @@ class ManualControl extends Component {
     axios.get(`api/valve/`)
       .then(res => {
         let newState = res.data;
-        this.setState({ ...newState, apiResponse: "Server Connected", serverConnected: true })
+        this.setState({ ...newState, remoteApiStatus, serverConnected: true })
       })
       .then(console.log(this.state))
-      .catch(err => console.log(err));
+      .catch(err => {
+        this.setState({ ...this.state, remoteApiStatus: 'API disconnected..' });
+      });
   }
 
   componentDidMount() {
@@ -62,7 +64,7 @@ class ManualControl extends Component {
     )
     return (
       <div className="switch-group">
-        <h2>{this.state.apiResponse}</h2>
+        <h2>{this.state.remoteApiStatus}</h2>
         <Field timer={this.state.timer} />
         <Switch name={"Cycling"} status={this.state.cycling} clicked={e => this.handleCycleClick(e)} />
         {valvesSwitches}

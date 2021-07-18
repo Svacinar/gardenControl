@@ -28,7 +28,11 @@ class ValveManager {
     if (process.env.ENVIRONMENT === 'arduino') {
       this.getRemoteValveState();
     }
-    return this.state;
+    const response = {
+      ...this.state,
+      remoteApiStatus: 'API Online',
+    }
+    return response;
   }
 
   async getRemoteValveState() {
