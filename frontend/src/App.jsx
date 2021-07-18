@@ -39,16 +39,11 @@ const App = () => {
     return `${releaseDay}-${releaseMonth}-${releaseYear}`;
   }
 
-
-
-
-
   return (
     <auth.Provider value={{ authenticated, setAuthenticated }}>
       <div className="App">
         <Navbar />
         <VideoFeature />
-
         <Switch>
           <PrivateRoute path="/" exact component={LandingPage} />
           <PrivateRoute path="/lawn" exact component={LawnDashboard} />
@@ -60,12 +55,9 @@ const App = () => {
           <PrivateRoute path="/smart" exact render={() => <div>There will be Smart Devices Control Panel</div>} />
           <Route component={Page404} />
         </Switch>
-
         <footer className="footer">Created 2020, Patrik Mackerle, version {createCurrentDate()}</footer>
       </div>
-
     </auth.Provider>
-
   );
 }
 
