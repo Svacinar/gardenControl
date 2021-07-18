@@ -30,6 +30,17 @@ const App = () => {
       })
       .catch(err => console.log(err))
   }, [])
+  const createCurrentDate = () => {
+    const releaseDateTime = new Date
+    const releaseDay = releaseDateTime.getDate();
+    const releaseMonth = 1 + releaseDateTime.getMonth();
+    const releaseYear = 1900 + releaseDateTime.getYear();
+    console.log(`${releaseDay}-${releaseMonth}-${releaseYear}`);
+    return `${releaseDay}-${releaseMonth}-${releaseYear}`;
+  }
+
+
+
 
 
   return (
@@ -50,7 +61,7 @@ const App = () => {
           <Route component={Page404} />
         </Switch>
 
-        <footer className="footer">Created 2020, Patrik Mackerle, version 1</footer>
+        <footer className="footer">Created 2020, Patrik Mackerle, version {createCurrentDate()}</footer>
       </div>
 
     </auth.Provider>
