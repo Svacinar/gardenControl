@@ -27,9 +27,8 @@ class ManualControl extends Component {
     axios.get(`api/valve/`)
       .then(res => {
         let newState = res.data;
-        this.setState({ ...newState, remoteApiStatus, serverConnected: true })
+        this.setState({ ...newState, serverConnected: true })
       })
-      .then(console.log(this.state))
       .catch(err => {
         this.setState({ ...this.state, remoteApiStatus: 'API disconnected..' });
       });

@@ -25,7 +25,6 @@ class AutomaticControl extends Component {
     callAPI() {
         axios.get(`/api/cron/`)
             .then(res => {
-                console.log(window.location.hostname)
                 let newState = res.data;
                 this.setState({ apiResponse: "Server Connected", serverConnected: true, strategies: newState })
 
