@@ -52,7 +52,12 @@ app.use(express.static(path.join(__dirname, '../../frontend/build')));
 app.use('/', authenticateRouter);
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../frontend/build/', 'index.html'));
+  res.sendFile(path.join(__dirname, '../../frontend/build/', 'index.html'), (err) => {
+    if (err) {
+      console.log(err);
+      res.send('Server maintenance is underway. Please come back in a minute');
+    }
+  });
 });
 
 app.use('/api', verifyToken, apiRouter);
