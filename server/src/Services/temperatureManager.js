@@ -34,8 +34,12 @@ class TemperatureManager {
 
         Object.keys(this.state.sensors).map((sensor) => {
             promises.push(
-                axios.get(this.state.sensors[sensor].endpoint)
-                    .then(res => {
+                axios({
+                    method: 'GET',
+                    url: this.state.sensors[sensor].endpoint,
+                    timeout: 6000,
+                })
+                    .then((res) => {
                         console.log(res.data)
                         this.state.sensors[sensor].status = 'online';
                         this.state.sensors[sensor].temperature = res.data.temperature;
